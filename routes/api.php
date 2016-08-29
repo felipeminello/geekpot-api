@@ -17,7 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::post('oauth/access_token', function() {
+Route::post('/oauth/access_token', function() {
 	return Response::json(Authorizer::issueAccessToken());
 });
 
