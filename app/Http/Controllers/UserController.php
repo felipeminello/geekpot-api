@@ -62,6 +62,7 @@ class UserController extends Controller
 			]);
 
 			$data['password'] = Hash::make($data['password']);
+			$data['access_type'] = 2;
 			$data['api_key'] = str_random(20);
 			$data['api_secret'] = str_random(20);
 
@@ -72,7 +73,9 @@ class UserController extends Controller
 			return response()->json(
 				[
 					'error' => false,
-					'message' => 'Usuário cadastrado, dados de acesso'
+					'message' => 'Usuário cadastrado',
+					'api_key' => $user->api_key,
+					'api_secret' => $user->api_secret
 				]);
 		} catch (ValidationException $e) {
 			return response()->json(

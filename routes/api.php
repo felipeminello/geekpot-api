@@ -22,3 +22,7 @@ Route::post('/oauth/access_token', function() {
 });
 
 Route::post('/cadastro', 'UserController@store');
+
+Route::group(['middleware' => 'oauth'], function() {
+	Route::resource('posts', 'PostController');
+});

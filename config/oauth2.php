@@ -31,12 +31,12 @@ return [
 		'password' => [
 			'class' => '\League\OAuth2\Server\Grant\PasswordGrant',
 			'callback' => '\App\Grant\PasswordGrantVerifier@verify',
-			'access_token_ttl' => 900
+			'access_token_ttl' => 300
 		],
 		'refresh_token' => [
 			'class' => '\League\OAuth2\Server\Grant\RefreshTokenGrant',
-			'access_token_ttl' => 900,
-			'refresh_token_ttl' => 9000
+			'access_token_ttl' => 300,
+			'refresh_token_ttl' => 900
 		]
     ],
 
