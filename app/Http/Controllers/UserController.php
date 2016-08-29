@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 use App\Http\Requests;
 use Mail;
+use Route;
 
 class UserController extends Controller
 {
@@ -83,6 +84,40 @@ class UserController extends Controller
 					'error' => $e->getMessage()
 				]);
 		}
+	}
+
+	public function lookup()
+	{
+		$routes = [
+			['method' => 'POST', 'route' => '/api/posts', 'description' => 'Create new Post', 'params' => [
+				'title' => 'string',
+				'text' => 'string',
+			]],
+			['method' => 'GET', 'route' => '/api/posts', 'description' => 'View Posts'],
+			['method' => 'GET', 'route' => '/api/posts/{id}', 'description' => 'View select post'],
+			['method' => 'PUT', 'route' => '/api/posts/{id}', 'description' => 'Update the post', 'params' => [
+				'title' => 'string',
+				'text' => 'string',
+			]],
+			['method' => 'DELETE', 'route' => '/api/posts/{id}', 'description' => 'Destroy the post'],
+
+			['method' => 'POST', 'route' => '/oauth/access_token', 'description' => 'Get Token', 'params' => [
+				'grant_type' => 'password',
+				'client_id' => '6e1ftdtwr80ty9zfkqzj',
+				'client_secret' => '9vpczvqmkndob6doqjqa',
+				'username' => '{API_KEY}',
+				'password' => '{API_SECRET}',
+			]],
+
+			['method' => 'POST', 'route' => '/oauth/access_token', 'description' => 'Get Refresh Token', 'params' => [
+				'grant_type' => 'refresh_token',
+				'client_id' => '6e1ftdtwr80ty9zfkqzj',
+				'client_secret' => '9vpczvqmkndob6doqjqa',
+				'refresh_token' => '{REFRESH_TOKEN}',
+			]],
+		];
+
+		return response()->json($routes);
 	}
 
 	/**
