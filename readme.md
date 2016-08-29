@@ -23,6 +23,9 @@ Acessar via Browser: /cadastro, para abertura de formulário de cadastro
 
 ## Endpoints da API
 
+#### Lookup
+`GET /api/lookup`
+
 #### Login do admin (validade do token: 5 minutos)
 `POST /oauth/access_token`
 ```
