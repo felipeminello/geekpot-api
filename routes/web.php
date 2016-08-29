@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', ['as' => 'home', 'uses' => function () {
+    return view('home');
+}]);
+
+Route::get('cadastro', ['as' => 'cadastro', 'uses' => 'UserController@create']);
