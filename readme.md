@@ -7,6 +7,10 @@ Para fazer a instalação, basta rodar no terminal o comando
 
 `composer install`
 
+O Dump do banco de dados está em: /bd.sql
+
+Para configurar o acesso a base, basta configurar as diretivas com o prefixo DB_ no arquivo .env
+
 ## Request
 Para fazer as requests com o token de autorização, basta inserir no cabeçalho da requisição
 ```
@@ -18,6 +22,17 @@ value: Bearer TOKEN
 Acessar via Browser: /cadastro, para abertura de formulário de cadastro
 
 ## Endpoints da API
+
+#### Login do admin (validade do token: 5 minutos)
+`POST /oauth/access_token`
+```
+Params:
+    grant_type: password,
+    client_id: 6e1ftdtwr80ty9zfkqzj,
+    client_secret: 9vpczvqmkndob6doqjqa
+    username: H5mee8TU3muDD7pbhwxA
+    password: qbVhDOAYP1VlfOmvE5TT
+```
 
 #### Login (validade do token: 5 minutos)
 `POST /oauth/access_token`
