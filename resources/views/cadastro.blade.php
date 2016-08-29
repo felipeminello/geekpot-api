@@ -8,7 +8,7 @@
         </div>
         <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd">
+            <input type="password" class="form-control" id="password" value="">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
@@ -20,10 +20,16 @@
 @section('script')
 <script type="text/javascript">
     $('form#cadastro').submit(function() {
-        $.ajax({
-            url: '{{ url('cadastro') }}',
-            method: 'post',
+        var data = {
+            email: $('#email').val(),
+            password: $('#password').val()
+        };
 
+        $.ajax({
+            url: '{{ url('api/cadastro') }}',
+            method: 'post',
+            data: data,
+            dataType: 'json'
         }).done(function(data) {
             console.log('done: ', data);
         }).fail(function() {

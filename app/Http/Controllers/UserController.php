@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserRegistration;
 use App\User;
+use Hash;
 use Illuminate\Http\Request;
 
 use Illuminate\Validation\ValidationException;
 
 use App\Http\Requests;
+use Mail;
 
 class UserController extends Controller
 {
@@ -37,7 +40,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('cadstro');
+        return view('cadastro');
     }
 
     /**
@@ -56,14 +59,17 @@ class UserController extends Controller
 				'password' => 'required|min:3|max:8',
 			]);
 
-			$this->user->create($data);
+			$data['password'] = Hash::make($data['password']);
+
+			$user = $this->user->create($data);
+
+			Mail::to($user->email)->send(new UserRegistration($user));
 
 		} catch (ValidationException $e) {
 			return response()->json([
 				'error' => $e->getMessage()
 			]);
 		}
-
     }
 
     /**
