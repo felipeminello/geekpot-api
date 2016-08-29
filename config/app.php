@@ -168,6 +168,7 @@ return [
          */
 		LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
 		LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
+		Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         //
 

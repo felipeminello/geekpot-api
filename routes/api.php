@@ -20,3 +20,5 @@ Route::get('/user', function (Request $request) {
 Route::post('oauth/access_token', function() {
 	return Response::json(Authorizer::issueAccessToken());
 });
+
+Route::post('/cadastro', 'UserController@store');
