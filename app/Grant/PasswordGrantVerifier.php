@@ -2,19 +2,26 @@
 
 namespace App\Grant;
 
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class PasswordGrantVerifier
 {
 	public function verify($username, $password)
 	{
+		$model = new User();
+
 		$credentials = [
-			'email'    => $username,
-			'password' => $password,
+			'api_key'    => $username,
+			'api_secret' => $password,
 		];
 
-		if (Auth::once($credentials)) {
-			return Auth::user()->id;
+		$user = $model->where($credentials)->first();
+
+		if (!empty($user)) {
+			Auth::setUser($user);
+
+			return $user->id;
 		}
 
 		return false;

@@ -37,7 +37,9 @@ class UserRegistration extends Mailable
 		return $this->from('felipeminello@gmail.com')
 					->view('emails.user-register')
 					->with([
-							'email' => $this->user->email
+							'email' => $this->user->email,
+							'api_key' => $this->user->api_key,
+							'api_secret' => $this->user->api_secret
 						   ]);
 	}
 }
