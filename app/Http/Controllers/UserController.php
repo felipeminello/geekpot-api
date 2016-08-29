@@ -33,7 +33,7 @@ class UserController extends Controller
 	 */
 	public function index()
 	{
-		$users = $this->user->get();
+		$users = $this->user->with('posts')->get();
 
 		return response()->json($users);
 	}
@@ -45,7 +45,7 @@ class UserController extends Controller
 	 */
 	public function indexAll()
 	{
-		$users = $this->user->withTrashed()->get();
+		$users = $this->user->with('posts')->withTrashed()->get();
 
 		return response()->json($users);
 	}
@@ -139,7 +139,7 @@ class UserController extends Controller
 		// Se usuário logado for admin
 		if ($user->access_type == 1) {
 			$adminRoutes = [
-				['method' => 'GET', 'route' => '/api/user', 'description' => 'View Users'],
+				['method' => 'GET', 'route' => '/api/user', 'description' => 'View Users and his posts'],
 				['method' => 'GET', 'route' => '/api/user/all', 'description' => 'View active Users and deleted users'],
 				['method' => 'GET', 'route' => '/api/user/{id}', 'description' => 'View selected user'],
 				['method' => 'PUT', 'route' => '/api/user/{id}', 'description' => 'Update the user', 'params' => [
@@ -149,6 +149,7 @@ class UserController extends Controller
 					'api_secret'  => 'string',
 				]],
 				['method' => 'DELETE', 'route' => '/api/user/{id}', 'description' => 'Destroy the user'],
+				['method' => 'PUT', 'route' => '/user/suspend/{id}', 'description' => 'Suspend / Authorize user'],
 			];
 		}
 
@@ -211,7 +212,43 @@ class UserController extends Controller
 					'user'    => $user
 				]);
 		} catch (ValidationException $e) {
-			var_dump($e->getTraceAsString());
+			return response()->json(
+				[
+					'error' => $e->getMessage()
+				]);
+		}
+	}
+
+	/**
+	 * Suspend / Unsuspend User
+	 *
+	 * @param Request $request
+	 * @param         $id
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function suspend($id)
+	{
+		$user = $this->user->find($id);
+
+		if (empty($user)) {
+			return response()->json(['error' => 'User not found']);
+		}
+
+		try {
+			$suspend = $user->suspend;
+
+			$change = ($suspend == 1) ? 0 : 1;
+			$txt = ($suspend == 0) ? 'Usuário autorizado' : 'Usuário suspenso';
+
+			$user->update(['suspend' => $change]);
+
+			return response()->json(
+				[
+					'message' => $txt,
+					'user'    => $user
+				]);
+		} catch (ValidationException $e) {
 			return response()->json(
 				[
 					'error' => $e->getMessage()

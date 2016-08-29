@@ -36,5 +36,7 @@ Route::group(['middleware' => 'oauth'], function() {
 		Route::get('user/{user}', 'UserController@show');
 		Route::put('user/{user}', 'UserController@update');
 		Route::delete('user/{user}', 'UserController@destroy');
+
+		Route::put('user/suspend/{user}', 'UserController@suspend');
 	});
 });
