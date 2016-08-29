@@ -43,10 +43,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">Cadastro</a>
+                    <a href="{{ route('home') }}">Cadastro</a>
                 </li>
                 <li>
-                    <a href="#">Login</a>
+                    <a href="{{ route('home') }}">Login</a>
                 </li>
             </ul>
         </div>
