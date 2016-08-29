@@ -14,6 +14,7 @@ class PasswordGrantVerifier
 		$credentials = [
 			'api_key'    => $username,
 			'api_secret' => $password,
+			'suspend' => 0,
 		];
 
 		$user = $model->where($credentials)->first();

@@ -24,9 +24,19 @@ Route::post('/oauth/access_token', function() {
 Route::post('/cadastro', 'UserController@store');
 
 Route::group(['middleware' => 'oauth'], function() {
-	Route::resource('posts', 'PostController', ['except' => [
+	Route::resource('post', 'PostController', ['except' => [
 		'create', 'edit'
 	]]);
 
 	Route::get('lookup', 'UserController@lookup');
+
+	Route::group(['middleware' => 'check.admin'], function() {
+		Route::get('user', 'UserController@index');
+		Route::get('user/all', 'UserController@indexAll');
+		Route::get('user/{user}', 'UserController@show');
+		Route::put('user/{user}', 'UserController@update');
+		Route::delete('user/{user}', 'UserController@destroy');
+
+		Route::put('user/suspend/{user}', 'UserController@suspend');
+	});
 });
